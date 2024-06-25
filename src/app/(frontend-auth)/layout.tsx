@@ -6,13 +6,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <main>
       <header>Auth header </header>
       <Link className="hover:underline" href={"/"}>
         Back to home
       </Link>
       {children}
       <footer>auth footer</footer>
-    </html>
+    </main>
   );
 }
