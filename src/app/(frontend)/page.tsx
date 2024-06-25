@@ -2,27 +2,26 @@ import { sampleData } from "@/lib/data";
 import Image from "next/image";
 export default function Home() {
   return (
-    <div className="w-full">
+    <div className="w-full grid place-items-center gap-4 md:grid-cols-2 xl:grid-cols-3">
       {sampleData.products.map((product) => (
-        <article key={product.id} className=" h-72 flex border-2 w-96">
-          <div className="w-2/5  h-full">
-            <Image
+        <div key={product.id} className="card bg-base-100 w-96 shadow-xl">
+          <figure className="w-96 h-40 overflow-hidden">
+            <img
               src={product.image}
-              width={50}
-              height={100}
-              alt={product.name}
-              className="w-full h-full"
+              alt="Shoes"
+              className="object-cover w-full h-full"
             />
-          </div>
-          <div className="flex flex-col w-3/5 h-full justify-between p-2">
-            <h3 className="">{product.name}</h3>
+          </figure>
+
+          <div className="card-body">
+            <h2 className="card-title">{product.name}</h2>
             <p>{product.description}</p>
-            <div className="flex justify-between p-2 px-4">
-              <p>{product.price}</p>
-              <button className="btn btn-primary ">Add to cart</button>
+            <div className="card-actions mt-4">
+              <p className=" text-xl">${product.price}</p>
+              <button className="btn btn-primary">Buy Now</button>
             </div>
           </div>
-        </article>
+        </div>
       ))}
     </div>
   );
