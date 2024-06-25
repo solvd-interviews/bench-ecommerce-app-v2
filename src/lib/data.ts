@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 export const sampleData = {
   products: [
     {
@@ -49,5 +51,18 @@ export const sampleData = {
       image: "/images/red-tshirt.png",
     },
   ],
-  users: [],
+  users: [
+    {
+      name: "John",
+      email: "admin@example.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: true,
+    },
+    {
+      name: "Jane",
+      email: "user@example.com",
+      password: bcrypt.hashSync("123456"),
+      isAdmin: false,
+    },
+  ],
 };

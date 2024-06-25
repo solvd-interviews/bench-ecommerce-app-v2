@@ -1,6 +1,5 @@
 import Card from "@/components/Card";
 import { sampleData } from "@/lib/data";
-import Image from "next/image";
 
 export default function Home() {
   return (
