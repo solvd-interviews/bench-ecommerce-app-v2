@@ -19,7 +19,7 @@ export default function Home() {
             <p>{product.description}</p>
             <div className="flex justify-between p-2 px-4">
               <p>{product.price}</p>
-              <button className="btn btn-primary">Add to cart</button>
+              <button className="btn btn-primary ">Add to cart</button>
             </div>
           </div>
         </article>
