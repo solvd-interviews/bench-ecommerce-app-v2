@@ -4,10 +4,15 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Link from 'next/link'
 
+interface FormData {
+  username: string;
+  password: string;
+}
+
 const SignIn = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data: FormData) => console.log(data);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
