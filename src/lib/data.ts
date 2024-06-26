@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import { hashSync } from "bcrypt";
 
 export const sampleData = {
   products: [
@@ -55,14 +55,23 @@ export const sampleData = {
     {
       name: "John",
       email: "admin@example.com",
-      password: bcrypt.hashSync("123456"),
+      password: hashSync("123456", 5),
       isAdmin: true,
+      isBlocked: true,
     },
     {
       name: "Jane",
       email: "user@example.com",
-      password: bcrypt.hashSync("123456"),
+      password: hashSync("123456", 5),
       isAdmin: false,
+      isBlocked: false,
+    },
+    {
+      name: "Bruno",
+      email: "bruno@example.com",
+      password: hashSync("123456", 5),
+      isAdmin: false,
+      isBlocked: true,
     },
   ],
 };

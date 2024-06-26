@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: false,
     },
     email: {
       type: String,
@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     isAdmin: { type: Boolean, required: true, default: false },
+    isBlocked: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );

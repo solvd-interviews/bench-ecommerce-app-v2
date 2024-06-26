@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Header from "@/components/Header";
 
 export default function RootLayout({
@@ -9,6 +8,7 @@ export default function RootLayout({
   return (
     <main>
       <Header />
+      <div className="w-full h-20"></div>
       {children}
       <footer>frontend footer</footer>
     </main>
