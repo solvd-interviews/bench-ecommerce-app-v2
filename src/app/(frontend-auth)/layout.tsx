@@ -1,4 +1,3 @@
-import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -7,12 +6,7 @@ export default function RootLayout({
 }) {
   return (
     <main>
-      <header>Auth header </header>
-      <Link className="hover:underline" href={"/"}>
-        Back to home
-      </Link>
       {children}
-      <footer>auth footer</footer>
     </main>
   );
 }
