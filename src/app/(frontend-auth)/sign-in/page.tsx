@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import Image from 'next/image';
 import Link from 'next/link'
 
@@ -10,9 +10,9 @@ interface FormData {
 }
 
 const SignIn = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => console.log(data);
 
   return (
     <div className="flex min-h-screen bg-gray-100">
