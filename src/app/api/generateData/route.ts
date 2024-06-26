@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest) => {
   await ProductModel.insertMany(products);
 
   return NextResponse.json({
-    message: "Generated successfully",
+    message: "Generated successfully!",
     users,
     products,
   });
