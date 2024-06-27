@@ -14,7 +14,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(config);
-  if (!session.user.isAdmin) {
+  if (!session?.user?.isAdmin) {
     redirect("/");
   }
 

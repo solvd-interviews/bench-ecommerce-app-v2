@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Image from "next/image";
 import Link from "next/link";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { BounceLoader } from "react-spinners";
 
 interface FormData {
   email: string;
@@ -20,19 +21,22 @@ const Form = () => {
 
   const router = useRouter();
 
+  const [isLoading, setisLoading] = useState(false);
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     console.log(data);
+    setisLoading(true);
     try {
       const response = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
       });
+      setisLoading(false);
       window.location.reload();
       router.replace("/");
-      //alert("succesfull sign in");
     } catch (error) {
-      //alert("Error sign in");
+      console.log("error login: ", error);
     }
   };
 
@@ -114,9 +118,16 @@ const Form = () => {
                 <div>
                   <button
                     type="submit"
-                    className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="flex justify-center items-center w-full px-4 py-2 text-sm font-medium btn btn-primary relative"
                   >
-                    Sign in
+                    <p> Sign in</p>
+                    {isLoading && (
+                      <BounceLoader
+                        size={20}
+                        cssOverride={{ position: "absolute", right: "2rem" }}
+                        color="#FFFFFF"
+                      />
+                    )}
                   </button>
                 </div>
               </form>
