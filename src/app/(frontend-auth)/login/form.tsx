@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn, getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { BounceLoader } from "react-spinners";
 
 interface FormData {
   email: string;
@@ -122,11 +121,7 @@ const Form = () => {
                   >
                     <p> Sign in</p>
                     {isLoading && (
-                      <BounceLoader
-                        size={20}
-                        cssOverride={{ position: "absolute", right: "2rem" }}
-                        color="#FFFFFF"
-                      />
+                      <span className="loading loading-spinner loading-md absolute right-4"></span>
                     )}
                   </button>
                 </div>
