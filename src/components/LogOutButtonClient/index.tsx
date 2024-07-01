@@ -12,7 +12,7 @@ export default function LogOutButtonClient() {
         signOut();
       }}
     >
-      Logout <LuLogOut />
+      Logout <LuLogOut  />
     </button>
   );
 }

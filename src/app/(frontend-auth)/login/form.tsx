@@ -22,7 +22,7 @@ const Form = () => {
 
   const [isLoading, setisLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     console.log(data);
     setisLoading(true);
     try {
