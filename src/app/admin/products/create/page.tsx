@@ -51,7 +51,7 @@ const Page = () => {
       formData.set("image-" + index, files[index]);
     });
     try {
-      const res = await fetch("http://localhost:3000/api/upload/product", {
+      const res = await fetch("/api/upload/product", {
         method: "post",
         body: formData,
       });

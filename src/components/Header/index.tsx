@@ -28,7 +28,9 @@ const Header = async ({ isAdmin = false }: { isAdmin?: boolean }) => {
               <li className="hover:underline">
                 <Link href={"/admin"}>Admin&apos;s Home</Link>
               </li>
-
+              <li className="hover:underline">
+                <Link href={"/"}>User&apos;s Home</Link>
+              </li>
               <li className="hover:underline">
                 <Link href={"/admin/products"}>Product</Link>
               </li>
