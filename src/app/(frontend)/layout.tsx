@@ -8,7 +8,6 @@ export default function RootLayout({
   return (
     <main>
       <Header />
-      <div className="w-full h-20"></div>
       {children}
       <footer>frontend footer</footer>
     </main>

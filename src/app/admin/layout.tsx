@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import { config } from "@/lib/auth";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
@@ -20,8 +21,10 @@ export default async function RootLayout({
   }
 
   return (
-    <>
+    <main>
+      <Header isAdmin/>
       {children}
-    </>
+      <footer></footer>
+    </main>
   );
 }

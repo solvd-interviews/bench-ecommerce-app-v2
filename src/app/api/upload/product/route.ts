@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import ProductModel from "@/lib/models/ProductModel";
-import { uploadImage } from "@/lib/utils";
+import { uploadImage } from "@/lib/utils/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 
 async function uploadFileLocally(image: File) {
@@ -61,10 +61,7 @@ export const POST = async (request: NextRequest) => {
 
     const resMongo = await productMongo.save();
 
-    return NextResponse.json(
-      { res: JSON.stringify(resMongo) },
-      { status: 200 }
-    );
+    return NextResponse.json({ res: resMongo }, { status: 201 });
   } catch (error) {
     console.error("Error handling upload:", error); // Log detailed error message
     return NextResponse.json(

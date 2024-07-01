@@ -4,16 +4,28 @@ import Image from "next/image";
 import { FormEvent, useState } from "react";
 import { LuXCircle } from "react-icons/lu";
 import { toast } from "sonner";
+import { LuArrowLeft } from "react-icons/lu";
+import Link from "next/link";
 
 const Page = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [files, setFiles] = useState<any | File[]>(undefined);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   console.log(" files clg", files);
+
+  const clearForm = () => {
+    setName("");
+    setDescription("");
+    setPrice(0);
+    setFiles(undefined);
+    setIsUploading(false);
+  };
 
   const handleCreateProduct = async (e: FormEvent) => {
     e.preventDefault();
+    setIsUploading(true);
     console.log("handleCreateProduct");
 
     if (name.length < 3) {
@@ -44,19 +56,30 @@ const Page = () => {
         body: formData,
       });
       console.log("res is", res);
+      if (res.status == 201) {
+        toast.success("The product was added succesfully!");
+      }
       const resJson = await res.json();
       console.log("resJson is", resJson);
     } catch (error) {
+      toast.error("There was an unexpected error! Contact support <3.");
       console.log("error is", error);
     }
+    clearForm();
   };
 
   return (
-    <main>
-      <header className="w-full h-20 font-bold text-3xl first-line bg-gray-300 flex justify-around items-center ">
-        ADMIN HEADER
-      </header>
-      <form className="flex flex-col gap-4 m-2">
+    <div className="p-4">
+      <button className="btn btn-primary  w-24 mb-5">
+        <Link
+          href="/admin/product"
+          className="flex w-full h-full gap-2 items-center"
+        >
+          <LuArrowLeft />
+          <p>Back</p>
+        </Link>
+      </button>
+      <form className="flex flex-col gap-4 ">
         <h2 className="font-bold text-3xl">Create a Product</h2>
         <label
           className="input input-bordered flex items-center gap-2 max-w-xs"
@@ -145,14 +168,16 @@ const Page = () => {
             ))}
         </div>
         <button
-          className="btn btn-primary mt-2 w-20"
+          className="btn btn-primary mt-2 w-28 flex"
           onClick={handleCreateProduct}
         >
           Create
+          {isUploading && (
+            <span className="loading loading-spinner loading-md"></span>
+          )}
         </button>
       </form>
-      <footer></footer>
-    </main>
+    </div>
   );
 };
 
