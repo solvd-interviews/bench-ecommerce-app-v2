@@ -9,7 +9,6 @@ async function uploadFileLocally(image: File) {
     const buffer = Buffer.from(arrayBuffer);
     const base64String = buffer.toString("base64");
     const url = await uploadImage("data:image/jpeg;base64," + base64String);
-    console.log("Uploaded Image URL:", url); // Log uploaded image URL
     return url;
   }
 }
@@ -17,7 +16,6 @@ async function uploadFileLocally(image: File) {
 export const POST = async (request: NextRequest) => {
   try {
     const formData = await request.formData();
-    console.log("formData: ", formData);
     let length = formData.get("imgLength");
     if (!length || typeof length !== "string") {
       return NextResponse.json(
@@ -46,10 +44,7 @@ export const POST = async (request: NextRequest) => {
       }
     }
 
-    console.log("Promises are;: ", promises);
     const urls = await Promise.all(promises);
-    console.log("urls are: ", urls);
-
     const product = {
       name: formData.get("name"),
       description: formData.get("description"),

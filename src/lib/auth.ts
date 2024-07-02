@@ -22,7 +22,6 @@ export const config = {
         }
         const { email, password } = credentials;
         await dbConnect();
-        console.log("credentials: ", credentials);
         if (
           typeof email !== "string" ||
           email.length < 3 ||
@@ -32,14 +31,12 @@ export const config = {
           throw new Error("The email or password are incorrect. Err 1.");
         }
 
-        console.log("Validation passed");
 
         const user = await UserModel.findOne({ email });
-        console.log("user found: ", user);
         if (user) {
           const isMatch = await compare(password, user.password);
           if (isMatch) {
-            console.log("MATCH TRUE");
+            ("MATCH TRUE");
             return user;
           } else {
             throw new Error("The email or password are incorrect. Err 2.");
@@ -52,9 +49,7 @@ export const config = {
   ],
   callbacks: {
     async jwt({ user, trigger, session, token }: any) {
-      console.log("jwt function");
       if (user) {
-        console.log("user in jwt");
         token.user = {
           _id: user._id,
           name: user.name,
@@ -70,11 +65,9 @@ export const config = {
           name: session.user.name,
         };
       }
-      console.log("token previous: ", token);
       return token;
     },
     async session({ session, token }: any) {
-      console.log("session, token: ", session, token);
       if (token) {
         session.user = {
           ...session.user,
@@ -82,7 +75,6 @@ export const config = {
           isBlocked: token.user.isBlocked,
         };
       }
-      console.log("session fin: ", session);
       return session;
     },
   },

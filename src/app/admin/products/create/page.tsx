@@ -13,7 +13,6 @@ const Page = () => {
   const [price, setPrice] = useState<number>(0);
   const [files, setFiles] = useState<any | File[]>(undefined);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  console.log(" files clg", files);
 
   const clearForm = () => {
     setName("");
@@ -26,7 +25,6 @@ const Page = () => {
   const handleCreateProduct = async (e: FormEvent) => {
     e.preventDefault();
     setIsUploading(true);
-    console.log("handleCreateProduct");
 
     if (name.length < 3) {
       return toast.error("The name should be greater than 2 characters.");
@@ -55,15 +53,13 @@ const Page = () => {
         method: "post",
         body: formData,
       });
-      console.log("res is", res);
       if (res.status == 201) {
         toast.success("The product was added succesfully!");
       }
       const resJson = await res.json();
-      console.log("resJson is", resJson);
     } catch (error) {
       toast.error("There was an unexpected error! Contact support <3.");
-      console.log("error is", error);
+      console.error("error is", error);
     }
     clearForm();
   };
@@ -128,7 +124,6 @@ const Page = () => {
           className="file-input file-input-bordered w-full max-w-xs"
           accept="image/png, image/jpg, image/jpeg"
           onChange={(e) => {
-            console.log("onchange: ", e);
             if (e.target.files && e.target.files?.length > 0) {
               const fileArray = Array.from(e.target.files);
               setFiles(fileArray);

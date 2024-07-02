@@ -16,6 +16,7 @@ const ProductModel =
   mongoose.models.Product || mongoose.model("Product", productSchema);
 
 export default ProductModel;
+
 export type Product = {
   id: string;
   name: string;

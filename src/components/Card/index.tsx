@@ -1,19 +1,21 @@
 import { Product } from "@/lib/models/ProductModel";
 import Image from "next/image";
+import Link from "next/link"
 
 const Card = ({ product }: { product: Product }) => {
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
-      <figure className="w-96 h-40 overflow-hidden">
-        <Image
-          src={product.images[0]}
-          alt={product.name}
-          width={400}
-          height={400}
-          className="object-cover w-full h-full skeleton animate-skeleton-fast"
-        />
-      </figure>
-
+      <Link href={`/${product.id}`}>
+        <figure className="w-96 h-40 overflow-hidden">
+          <Image
+            src={product.images[0]}
+            alt={product.name}
+            width={400}
+            height={400}
+            className="object-cover w-full h-full skeleton animate-skeleton-fast"
+          />
+        </figure>
+      </Link>
       <div className="card-body ">
         <h2 className="card-title truncate">{product.name}</h2>
         <p className="w-full min-h-12 h-12 overflow-hidden">
@@ -27,5 +29,5 @@ const Card = ({ product }: { product: Product }) => {
     </div>
   );
 };
-  
+
 export default Card;

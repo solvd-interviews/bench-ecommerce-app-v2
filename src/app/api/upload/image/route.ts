@@ -4,7 +4,6 @@ import { uploadImage } from "@/lib/utils/cloudinary";
 export const POST = async (request: NextRequest) => {
   try {
     const formData = await request.formData();
-    console.log("formData: ", formData.keys());
     const image = formData.get("image");
 
     if (image && image instanceof File) {
@@ -14,11 +13,9 @@ export const POST = async (request: NextRequest) => {
 
       const url = await uploadImage("data:image/jpeg;base64," + base64String);
 
-      console.log("Uploaded Image URL:", url); // Log uploaded image URL
-
       return NextResponse.json({ url: url }, { status: 201 });
     } else {
-      console.log("No valid image uploaded"); // Log if no valid image uploaded
+      console.error("No valid image uploaded"); // Log if no valid image uploaded
       return NextResponse.json(
         { message: "No valid image uploaded" },
         { status: 400 }
