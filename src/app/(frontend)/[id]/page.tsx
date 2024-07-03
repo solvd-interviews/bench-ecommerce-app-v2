@@ -27,8 +27,6 @@ const ProductDetailPage: React.FC = () => {
 
   const { id } = useParams()
 
-
-
   useEffect(() => {
     if (typeof id === 'string') {
       setLoading(true);
