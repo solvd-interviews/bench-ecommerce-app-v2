@@ -1,17 +1,33 @@
 "use client"
 import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product } from '@/lib/models/ProductModel';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { register } from 'swiper/element/bundle';
 
-const ProductDetailPage = () => {
+register();
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'swiper-container': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
+        navigation?: string;
+        pagination?: string;
+        loop?: string;
+      }, HTMLElement>,
+      'swiper-slide': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
+    }
+  }
+}
+
+const ProductDetailPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null)
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const { id } = useParams()
+
+
 
   useEffect(() => {
     if (typeof id === 'string') {
@@ -42,14 +58,9 @@ const ProductDetailPage = () => {
     <div className="flex flex-col md:flex-row justify-around items-start my-8 mx-auto p-4 max-w-4xl">
       <div className="w-full md:w-1/2 px-2 py-4">
         {product.images && product.images.length > 1 ? (
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={1}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
+          <swiper-container navigation="true" pagination="true">
             {product.images.map((image, index) => (
-              <SwiperSlide key={index}>
+              <swiper-slide key={index}>
                 <Image
                   src={image}
                   alt={`Slide ${index}`}
@@ -57,9 +68,9 @@ const ProductDetailPage = () => {
                   height={400}
                   className="object-cover w-full"
                 />
-              </SwiperSlide>
+              </swiper-slide>
             ))}
-          </Swiper>
+          </swiper-container>
         ) : (
           <Image
             src={product.images[0]}
