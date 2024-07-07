@@ -20,16 +20,24 @@ declare global {
   }
 }
 
-const ProductDetailPage: React.FC = () => {
-  const [product, setProduct] = useState<Product | null>(null)
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+interface ProductState {
+  product: Product | null;
+  loading: boolean;
+  error: string | null;
+}
 
-  const { id } = useParams()
+const ProductDetailPage: React.FC = () => {
+  const [state, setState] = useState<ProductState>({
+    product: null,
+    loading: false,
+    error: null,
+  });
+
+  const { id } = useParams();
 
   useEffect(() => {
     if (typeof id === 'string') {
-      setLoading(true);
+      setState(prevState => ({ ...prevState, loading: true }));
       fetch(`/api/${id}`)
         .then((res) => {
           if (res.ok) {
@@ -39,18 +47,19 @@ const ProductDetailPage: React.FC = () => {
           }
         })
         .then((data) => {
-          setProduct(data);
-          setLoading(false);
+          setState({ product: data, loading: false, error: null });
         })
         .catch((err) => {
-          setError(err.message || 'Failed to load product');
+          setState({ product: null, loading: false, error: err.message || 'Failed to load product' });
           console.error('Fetch error:', err);
-          setLoading(false);
         });
     }
-  }, [id])
+  }, [id]);
+
+  const { product, loading, error } = state;
+
   if (error) return <p>{error}</p>;
-  if (!product) return <p>Loading...</p>;
+  if (loading || !product) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-col md:flex-row justify-around items-start my-8 mx-auto p-4 max-w-4xl">
