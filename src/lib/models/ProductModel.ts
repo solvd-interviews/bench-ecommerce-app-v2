@@ -17,7 +17,8 @@ const ProductModel =
 
 export default ProductModel;
 export type Product = {
-  id: string;
+  id?: string;
+  _id: string;
   name: string;
   description: string;
   price: number;
