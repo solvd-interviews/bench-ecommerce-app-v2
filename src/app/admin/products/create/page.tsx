@@ -11,12 +11,16 @@ const Page = () => {
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
+  const [stock, setStock] = useState<number>(0);
+  const [isBlock, setIsBlock] = useState<boolean>(false);
   const [files, setFiles] = useState<any | File[]>(undefined);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   console.log(" files clg", files);
 
   const clearForm = () => {
     setName("");
+    setStock(0);
+    setIsBlock(false);
     setDescription("");
     setPrice(0);
     setFiles(undefined);
@@ -27,25 +31,32 @@ const Page = () => {
     e.preventDefault();
     setIsUploading(true);
     console.log("handleCreateProduct");
-
+    console.log("isBlock: ", isBlock);
     if (name.length < 3) {
+      setIsUploading(false);
       return toast.error("The name should be greater than 2 characters.");
     }
     if (description.length < 3) {
+      setIsUploading(false);
       return toast.error(
         "The description should be greater than 2 characters."
       );
     }
     if (!price || price < 1) {
+      setIsUploading(false);
       return toast.error("The price should be greater than 0.");
     }
+
     if (!files || files.length < 1) {
+      setIsUploading(false);
       return toast.error("At least 1 file is required.");
     }
     const formData = new FormData();
     formData.set("name", name);
     formData.set("description", description);
     formData.set("price", JSON.stringify(price));
+    formData.set("stock", JSON.stringify(stock));
+    formData.set("isBlock", JSON.stringify(isBlock));
     formData.set("imgLength", files.length);
     files.forEach((e: File, index: number) => {
       formData.set("image-" + index, files[index]);
@@ -69,7 +80,7 @@ const Page = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 overflow-y-auto">
       <button className="btn btn-primary  w-24 mb-5">
         <Link
           href="/admin/product"
@@ -120,6 +131,30 @@ const Page = () => {
             value={price}
             onChange={(e) => setPrice(parseFloat(e.target.value))}
             placeholder="$50"
+          ></input>
+        </label>
+        <label
+          htmlFor="stock"
+          className="input input-bordered flex items-center gap-2 max-w-xs"
+        >
+          Stock
+          <input
+            className="grow"
+            type="number"
+            id="stock"
+            value={stock}
+            onChange={(e) => setStock(parseFloat(e.target.value))}
+            placeholder="10"
+          ></input>
+        </label>
+        <label htmlFor="block" className=" flex items-center gap-2 max-w-xs">
+          Block
+          <input
+            className=" toggle"
+            type="checkbox"
+            id="price"
+            checked={isBlock}
+            onChange={(e) => setIsBlock(e.target.checked)}
           ></input>
         </label>
         <input

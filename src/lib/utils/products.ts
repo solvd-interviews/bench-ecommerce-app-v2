@@ -4,8 +4,28 @@ import ProductModel from "../models/ProductModel";
 export const fetchProducts = async () => {
   console.log("fetchProducts");
   await dbConnect();
-  const res = await ProductModel.find().sort({ createdAt: -1 });
+  const res = await ProductModel.find({ isBlocked: false }).sort({
+    createdAt: -1,
+  });
   console.log("res ProductModel: ", res);
+  return res;
+};
+
+export const blockProduct = async (id: string, block: boolean) => {
+  await dbConnect();
+  const res = await ProductModel.findByIdAndUpdate(
+    id,
+    { $set: { isBlocked: block } },
+    { new: true }
+  );
+  console.log("res ProductModel: blockProduct", res);
+  return res;
+};
+
+export const deleteProduct = async (id: string) => {
+  await dbConnect();
+  const res = await ProductModel.findByIdAndDelete(id);
+  console.log("res ProductModel: deleted", res);
   return res;
 };
 

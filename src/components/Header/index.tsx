@@ -32,10 +32,10 @@ const Header = async ({ isAdmin = false }: { isAdmin?: boolean }) => {
                 <Link href={"/"}>User&apos;s Home</Link>
               </li>
               <li className="hover:underline">
-                <Link href={"/admin/products"}>Product</Link>
+                <Link href={"/admin/products"}>Manage products</Link>
               </li>
               <li className="hover:underline">
-                <Link href={"/admin/users"}>Users</Link>
+                <Link href={"/admin/users"}>Manage users</Link>
               </li>
             </ul>
           </nav>
@@ -44,9 +44,6 @@ const Header = async ({ isAdmin = false }: { isAdmin?: boolean }) => {
             <ul className="flex gap-3 ">
               <li className="hover:underline">
                 <Link href={"/"}>Home</Link>
-              </li>
-              <li className="hover:underline">
-                <Link href={"/login"}>Log in</Link>
               </li>
               <li className="hover:underline">
                 <Link href={"/cart"}>Cart</Link>

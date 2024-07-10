@@ -6,6 +6,8 @@ const productSchema = new mongoose.Schema(
     images: { type: [String], required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
+    isBlocked: { type: Boolean, required: true, default: false },
+    stock: { type: Number, required: true, default: 0 },
   },
   {
     timestamps: true,
@@ -23,4 +25,8 @@ export type Product = {
   description: string;
   price: number;
   images: string[];
+  isBlocked: boolean;
+  stock: number;
+  createdAt: string;
+  updatedAt: string;
 };

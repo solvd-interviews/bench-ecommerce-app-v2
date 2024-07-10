@@ -29,7 +29,6 @@ const config: Config = {
           "base-100": "#ffffff",
           info: "#0000ff",
           success: "#00ff00",
-          warning: "#00ff00",
           error: "#ff0000",
         },
       },

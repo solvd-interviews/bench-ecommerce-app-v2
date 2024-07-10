@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
+import { ProductTableState } from "../ProductTable";
 
 interface PaginationProps {
   pages: number;
-  setCurrentPage: (page: number) => void;
+  limit: number;
+  setState: Dispatch<SetStateAction<ProductTableState>>;
 }
 
-function Pagination({ pages, setCurrentPage }: PaginationProps) {
+function Pagination({ pages, limit, setState }: PaginationProps) {
   //Set number of pages
-  const numberOfPages: any[] = [];
-  for (let i = 1; i <= pages; i++) {
-    numberOfPages.push(i);
-  }
+  const numberOfPages = useMemo(() => {
+    const pagesArray = [];
+    for (let i = 1; i <= pages; i++) {
+      pagesArray.push(i);
+    }
+    return pagesArray;
+  }, [pages]);
 
   // Current active button number
   const [currentButton, setCurrentButton] = useState(1);
@@ -62,11 +67,35 @@ function Pagination({ pages, setCurrentPage }: PaginationProps) {
     }
 
     setArrOfCurrButtons(tempNumberOfPages);
-    setCurrentPage(currentButton);
-  }, [currentButton]);
+    setState((prevState) => ({ ...prevState, page: currentButton }));
+  }, [currentButton, arrOfCurrButtons, numberOfPages, setState]);
 
   return (
-    <div className=" flex justify-center items-center w-full py-2">
+    <div className=" flex justify-center items-center w-full py-1 relative">
+      <label className="flex items-center gap-2 absolute left-2">
+        <p className="text-stone-500">Rows per page</p>
+        <select
+          className="select select-bordered  w-full max-w-24"
+          value={limit}
+          onChange={(e) =>
+            setState((prevState) => ({
+              ...prevState,
+              limit: parseFloat(e.target.value),
+            }))
+          }
+        >
+          <option disabled selected>
+            Pick your product limit
+          </option>
+          <option>1</option>
+          <option>3</option>
+          <option>5</option>
+          <option>10</option>
+          <option>20</option>
+          <option>50</option>
+          <option>100</option>
+        </select>
+      </label>
       <button
         className={` mr-4 btn btn-primary shadow-xl  ${
           currentButton === 1 ? "btn-disabled" : ""

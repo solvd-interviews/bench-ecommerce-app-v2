@@ -6,10 +6,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="h-screen w-full border-2 border-red-400 flex flex-col">
       <Header />
-      {children}
-      <footer>frontend footer</footer>
+      <div className="w-full  border-green-300 border-2 overflow-y-scroll">
+        <div className="w-full">{children}</div>
+        <footer className="w-full flex justify-center h-8 items-center bg-gray-300">
+          Frontend footer
+        </footer>
+      </div>
     </main>
   );
 }

@@ -23,7 +23,7 @@ export default async function RootLayout({
   return (
     <main className="w-full h-screen flex flex-col">
       <Header isAdmin />
-      <div className="w-full flex flex-col flex-grow">{children}</div>
+      <div className="flex-grow flex flex-col overflow-hidden">{children}</div>
     </main>
   );
 }

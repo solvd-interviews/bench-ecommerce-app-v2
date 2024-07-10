@@ -11,6 +11,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/bag_f8z6gw.png",
       ],
+      isBlocked: false,
+      stock: 10,
     },
     {
       id: "bab48f2a-0c8d-40b8-92bd-49cd50026fc2",
@@ -21,6 +23,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/bike-light_snzdnk.png",
       ],
+      isBlocked: false,
+      stock: 5,
     },
     {
       id: "bab48f2a-0c8d-40b8-92bd-49cd50026fc3",
@@ -31,6 +35,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/black-tshirt_mdghbp.png",
       ],
+      isBlocked: true,
+      stock: 10,
     },
     {
       id: "bab48f2a-0c8d-40b8-92bd-49cd50026fc4",
@@ -41,6 +47,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/fleece-jacket_kznpkh.png",
       ],
+      isBlocked: false,
+      stock: 10000,
     },
     {
       id: "bab48f2a-0c8d-40b8-92bd-49cd50026fc5",
@@ -51,6 +59,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/red-tshirt_ygrp5h.png",
       ],
+      isBlocked: false,
+      stock: 10,
     },
     {
       id: "bab48f2a-0c8d-40b8-92bd-49cd50026fc6",
@@ -61,6 +71,8 @@ export const sampleData = {
       images: [
         "https://res.cloudinary.com/doxpkairh/image/upload/v1719846045/red-tshirt_ygrp5h.png",
       ],
+      isBlocked: false,
+      stock: 10,
     },
   ],
   users: [

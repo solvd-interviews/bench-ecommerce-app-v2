@@ -33,6 +33,21 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
+    const stock = formData.get("stock");
+    if (!stock || typeof stock !== "string") {
+      return NextResponse.json(
+        { message: "Not correct stock." },
+        { status: 400 }
+      );
+    }
+    const isBlock = formData.get("isBlock");
+    if (!isBlock || typeof isBlock !== "string") {
+      return NextResponse.json(
+        { message: "Not correct isBlock." },
+        { status: 400 }
+      );
+    }
+
     let promises: Promise<string | undefined>[] = [];
     for (let index = 0; index < parseInt(length); index++) {
       let file = formData.get("image-" + index);
@@ -54,6 +69,8 @@ export const POST = async (request: NextRequest) => {
       name: formData.get("name"),
       description: formData.get("description"),
       price: parseInt(price),
+      stock: parseInt(stock),
+      isBlocked: Boolean(isBlock),
       images: urls,
     };
     await dbConnect();
