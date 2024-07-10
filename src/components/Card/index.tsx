@@ -12,7 +12,7 @@ const Card = ({ product }: { product: Product }) => {
             alt={product.name}
             width={400}
             height={400}
-            className="object-cover w-full h-full skeleton animate-skeleton-fast rounded-none rounded-t-xl"
+            className="object-cover w-full h-full bg-secondary rounded-none rounded-t-xl"
           />
         </figure>
       </Link>

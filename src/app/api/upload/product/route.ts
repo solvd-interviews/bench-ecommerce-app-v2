@@ -45,6 +45,7 @@ export const POST = async (request: NextRequest) => {
         { status: 400 }
       );
     }
+    console.log("String(isBlock === tru)", String(isBlock === "true"), isBlock);
 
     let promises: Promise<string | undefined>[] = [];
     for (let index = 0; index < parseInt(length); index++) {
@@ -65,7 +66,7 @@ export const POST = async (request: NextRequest) => {
       description: formData.get("description"),
       price: parseInt(price),
       stock: parseInt(stock),
-      isBlocked: Boolean(isBlock),
+      isBlocked: String(isBlock === "true"),
       images: urls,
     };
     await dbConnect();

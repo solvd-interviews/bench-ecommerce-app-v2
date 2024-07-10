@@ -11,7 +11,7 @@ export default function LogOutButtonClient() {
         signOut();
       }}
     >
-      Logout <LuLogOut  />
+      <p className="hidden md:flex">Logout</p> <LuLogOut />
     </button>
   );
 }

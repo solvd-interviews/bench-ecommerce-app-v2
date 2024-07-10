@@ -23,13 +23,13 @@ const config: Config = {
       {
         mytheme: {
           primary: "#00CC66",
-          secondary: "#ff00ff",
+          secondary: "#f1f5f8",
           accent: "#00ffff",
           neutral: "#00CC66",
           "base-100": "#ffffff",
           info: "#0000ff",
           success: "#00ff00",
-          error: "#ff0000",
+          error: "#FF7070",
         },
       },
     ],

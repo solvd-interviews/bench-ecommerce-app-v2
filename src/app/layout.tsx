@@ -20,7 +20,12 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProviderComponent>{children}</SessionProviderComponent>{" "}
-        <Toaster position="top-center" expand={false} richColors />
+        <Toaster
+          position="top-center"
+          expand={false}
+          richColors
+          closeButton={true}
+        />
       </body>
     </html>
   );

@@ -71,11 +71,11 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
   }, [currentButton, arrOfCurrButtons, numberOfPages, setState]);
 
   return (
-    <div className=" flex justify-center items-center w-full py-1 relative">
-      <label className="flex items-center gap-2 absolute left-2">
-        <p className="text-stone-500">Rows per page</p>
+    <div className=" flex justify-center items-center w-full py-1 relative gap-1">
+      <label className="flex items-center gap-2 md:absolute md:left-2 ">
+        <p className="text-stone-500 hidden md:flex">Rows per page</p>
         <select
-          className="select select-bordered  w-full max-w-24"
+          className="select select-bordered  w-full max-w-20  md:max-w-24"
           value={limit}
           onChange={(e) =>
             setState((prevState) => ({
@@ -97,7 +97,7 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
         </select>
       </label>
       <button
-        className={` mr-4 btn btn-primary shadow-xl  ${
+        className={`  btn btn-primary shadow-xl hidden md:flex  ${
           currentButton === 1 ? "btn-disabled" : ""
         }`}
         disabled={currentButton === 1 ? true : false}
@@ -112,7 +112,7 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
         return (
           <button
             key={index}
-            className={`w-10 flex justify-center items-center rounded-md font-bold btn btn-primary mx-1 shadow-xl  ${
+            className={` flex justify-center items-center rounded-md font-bold btn btn-primary shadow-xl  ${
               currentButton === item ? "" : "bg-opacity-40"
             }`}
             onClick={() => setCurrentButton(item)}
@@ -123,7 +123,7 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
       })}
 
       <button
-        className={`ml-4 btn btn-primary shadow-xl ${
+        className={`btn btn-primary shadow-xl hidden md:flex  ${
           currentButton === numberOfPages.length ? "btn-disabled" : ""
         }`}
         disabled={currentButton === numberOfPages.length ? true : false}

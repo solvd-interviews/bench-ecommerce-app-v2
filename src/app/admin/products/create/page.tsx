@@ -79,7 +79,7 @@ const Page = () => {
     <div className="p-4 overflow-y-auto">
       <button className="btn btn-primary  w-24 mb-5">
         <Link
-          href="/admin/product"
+          href="/admin/products"
           className="flex w-full h-full gap-2 items-center"
         >
           <LuArrowLeft />
