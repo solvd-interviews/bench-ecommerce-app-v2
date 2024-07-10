@@ -6,7 +6,6 @@ export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get("limit");
   const page = searchParams.get("page");
-  "page", limit, page;
   if (!limit || !page) {
     return NextResponse.json(
       { error: "The params are wrong" },
