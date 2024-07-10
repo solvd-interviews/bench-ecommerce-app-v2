@@ -39,33 +39,33 @@ const Header = ({ isAdmin = false }) => {
             {isMobileMenuOpen ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
           </button>
           {isMobileMenuOpen && (
-            <nav className="absolute top-full right-5 mt-2 bg-gray-200 shadow-lg min-w-max rounded-lg">
+            <nav className="absolute top-full right-1 mt-2 bg-gray-200 shadow-lg min-w-max rounded-lg">
               <ul className="flex flex-col gap-2 p-2">
                 {isAdmin ? (
                   <>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/admin"}>Admin&apos;s Home</Link>
+                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                      <Link className="p-3" href={"/admin"}>Admin&apos;s Home</Link>
                     </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/"}>User&apos;s Home</Link>
+                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                      <Link className="p-3" href={"/"}>User&apos;s Home</Link>
                     </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/admin/products"}>Product</Link>
+                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                      <Link className="p-3" href={"/admin/products"}>Product</Link>
                     </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/admin/users"}>Users</Link>
+                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                      <Link className="p-3" href={"/admin/users"}>Users</Link>
                     </li>
                   </>
                 ) : (
                   <>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/"}>Home</Link>
+                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                        <Link className="p-3" href={"/"}>Home</Link>
                     </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/login"}>Log in</Link>
+                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                        <Link className="p-3" href={"/login"}>Log in</Link>
                     </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
-                      <Link href={"/cart"}>Cart</Link>
+                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
+                        <Link className="p-3" href={"/cart"}>Cart</Link>
                     </li>
                   </>
                 )}
