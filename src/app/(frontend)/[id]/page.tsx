@@ -1,21 +1,27 @@
-"use client"
-import { useParams } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
-import { Product } from '@/lib/models/ProductModel';
-import Image from 'next/image';
-import { register } from 'swiper/element/bundle';
+"use client";
+import { useParams } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { Product } from "@/lib/models/ProductModel";
+import Image from "next/image";
+import { register } from "swiper/element/bundle";
 
 register();
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      'swiper-container': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement> & {
-        navigation?: string;
-        pagination?: string;
-        loop?: string;
-      }, HTMLElement>,
-      'swiper-slide': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>,
+      "swiper-container": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          navigation?: string;
+          pagination?: string;
+          loop?: string;
+        },
+        HTMLElement
+      >;
+      "swiper-slide": React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
     }
   }
 }
@@ -36,22 +42,26 @@ const ProductDetailPage: React.FC = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    if (typeof id === 'string') {
-      setState(prevState => ({ ...prevState, loading: true }));
+    if (typeof id === "string") {
+      setState((prevState) => ({ ...prevState, loading: true }));
       fetch(`/api/${id}`)
         .then((res) => {
           if (res.ok) {
             return res.json();
           } else {
-            throw new Error('Failed to fetch product');
+            throw new Error("Failed to fetch product");
           }
         })
         .then((data) => {
           setState({ product: data, loading: false, error: null });
         })
         .catch((err) => {
-          setState({ product: null, loading: false, error: err.message || 'Failed to load product' });
-          console.error('Fetch error:', err);
+          setState({
+            product: null,
+            loading: false,
+            error: err.message || "Failed to load product",
+          });
+          console.error("Fetch error:", err);
         });
     }
   }, [id]);
@@ -92,10 +102,12 @@ const ProductDetailPage: React.FC = () => {
         <h1 className="text-xl md:text-2xl font-bold">{product.name}</h1>
         <p className="my-2 md:my-4">{product.description}</p>
         <p className="text-lg md:text-xl font-semibold">${product.price}</p>
-        <button className="btn btn-primary mt-4 w-full md:w-auto">Add to Cart</button>
+        <button className="btn btn-primary mt-4 w-full md:w-auto">
+          Add to Cart
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default ProductDetailPage;
