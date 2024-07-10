@@ -1,12 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import LogOutButtonClient from "../LogOutButtonClient";
-import { getServerSession } from "next-auth";
-import { config } from "@/lib/auth";
+import { useSession } from "next-auth/react";
 import { LuShield } from "react-icons/lu";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
+const Header = ({ isAdmin = false }) => {
+  const { data: session } = useSession();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-const Header = async ({ isAdmin = false }: { isAdmin?: boolean }) => {
-  const session = await getServerSession(config);
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <>
       <header className="w-full  flex justify-around items-center p-2 fixed h-16 z-10 bg-white border-b-2 ">
@@ -26,45 +34,88 @@ const Header = async ({ isAdmin = false }: { isAdmin?: boolean }) => {
           )}
         </div>
 
-        {isAdmin ? (
-          <nav>
-            <ul className="flex gap-3 items-center justify-around ">
-              <li className="hover:underline">
-                <Link href={"/"}>User view</Link>
-              </li>
-              <li className="hover:underline">
-                <Link href={"/admin/products"}>Manage products</Link>
-              </li>
-              <li className="hover:underline">
-                <Link href={"/admin/users"}>Manage users</Link>
-              </li>
-            </ul>
-          </nav>
-        ) : (
-          <nav>
-            <ul className="flex gap-3 ">
-              <li className="hover:underline">
-                <Link href={"/"}>Home</Link>
-              </li>
-              <li className="hover:underline">
-                <Link href={"/cart"}>Cart</Link>
-              </li>
-            </ul>
-          </nav>
-        )}
+        <div className="sm:hidden flex items-center relative">
+          <button onClick={toggleMobileMenu} className="mr-2">
+            {isMobileMenuOpen ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
+          </button>
+          {isMobileMenuOpen && (
+            <nav className="absolute top-full right-5 mt-2 bg-gray-200 shadow-lg min-w-max rounded-lg">
+              <ul className="flex flex-col gap-2 p-2">
+                {isAdmin ? (
+                  <>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/admin"}>Admin&apos;s Home</Link>
+                    </li>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/"}>User&apos;s Home</Link>
+                    </li>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/admin/products"}>Product</Link>
+                    </li>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/admin/users"}>Users</Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/"}>Home</Link>
+                    </li>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/login"}>Log in</Link>
+                    </li>
+                    <li className="hover:bg-gray-600 hover:text-white p-2 rounded">
+                      <Link href={"/cart"}>Cart</Link>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </nav>
+          )}
+        </div>
+
+        <nav className="hidden sm:flex gap-3">
+          <ul className="flex gap-3">
+            {isAdmin ? (
+              <>
+                <li className="hover:underline">
+                  <Link href={"/admin"}>Admin&apos;s Home</Link>
+                </li>
+                <li className="hover:underline">
+                  <Link href={"/"}>User&apos;s Home</Link>
+                </li>
+                <li className="hover:underline">
+                  <Link href={"/admin/products"}>Product</Link>
+                </li>
+                <li className="hover:underline">
+                  <Link href={"/admin/users"}>Users</Link>
+                </li>
+              </>
+            ) : (
+                <>
+                  <li className="hover:underline">
+                    <Link href={"/"}>Home</Link>
+                  </li>
+                  <li className="hover:underline">
+                    <Link href={"/login"}>Log in</Link>
+                  </li>
+                  <li className="hover:underline">
+                    <Link href={"/cart"}>Cart</Link>
+                  </li>
+              </>
+            )}
+          </ul>
+        </nav>
 
         {session ? (
-          <div className="flex gap-4 items-center ">
-            <h2
-              className="font-bold text-white "
-              style={{ textShadow: "#000 0px 0 5px" }}
-            >
-              <p className="hidden md:flex">{session?.user?.name}</p>
+          <div className="hidden sm:flex gap-4 items-center">
+            <h2 className="font-bold text-white" style={{ textShadow: "#000 0px 0 5px" }}>
+              {session?.user?.name}
             </h2>
             <LogOutButtonClient />
           </div>
         ) : (
-          <Link href={"/login"}>
+            <Link href={"/login"} className="hidden sm:block">
             <button className="btn btn-primary">Login</button>
           </Link>
         )}
