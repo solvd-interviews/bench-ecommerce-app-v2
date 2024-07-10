@@ -23,7 +23,6 @@ const Form = () => {
   const [isLoading, setisLoading] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    console.log(data);
     setisLoading(true);
     try {
       const response = await signIn("credentials", {
@@ -35,7 +34,7 @@ const Form = () => {
       window.location.reload();
       router.replace("/");
     } catch (error) {
-      console.log("error login: ", error);
+      console.error("error login: ", error);
     }
   };
 

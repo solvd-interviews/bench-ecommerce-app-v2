@@ -13,7 +13,6 @@ export default function Form() {
         password: formData.get('password'),
       }),
     });
-    console.log({ response });
   };
   return (
     <form

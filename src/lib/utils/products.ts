@@ -2,7 +2,6 @@ import dbConnect from "../dbConnect";
 import ProductModel from "../models/ProductModel";
 
 export const fetchProducts = async () => {
-  console.log("fetchProducts");
   await dbConnect();
   const res = await ProductModel.find({ isBlocked: false }).sort({
     createdAt: -1,
