@@ -54,7 +54,6 @@ const ProductTable = () => {
       }
 
       const resJson = await res.json();
-      console.log("resJson: ", resJson);
       return true;
     } catch (error) {
       console.error("Fetch error: ", error);
@@ -78,7 +77,6 @@ const ProductTable = () => {
       }
 
       const resJson = await res.json();
-      console.log("resJson: ", resJson);
       return true;
     } catch (error) {
       console.error("Fetch error: ", error);

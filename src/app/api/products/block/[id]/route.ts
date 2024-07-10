@@ -18,7 +18,6 @@ export const PATCH = async (
       return new NextResponse("Invalid Data", { status: 400 });
     }
     const { isBlocked } = body;
-    console.log("isBlocked: ", isBlocked);
     if (typeof isBlocked !== "boolean") {
       return NextResponse.json(
         { error: "isBlocked not found" },

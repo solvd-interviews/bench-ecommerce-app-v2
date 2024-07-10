@@ -6,7 +6,6 @@ export const fetchProducts = async () => {
   const res = await ProductModel.find({ isBlocked: false }).sort({
     createdAt: -1,
   });
-  console.log("res ProductModel: ", res);
   return res;
 };
 
@@ -17,19 +16,16 @@ export const blockProduct = async (id: string, block: boolean) => {
     { $set: { isBlocked: block } },
     { new: true }
   );
-  console.log("res ProductModel: blockProduct", res);
   return res;
 };
 
 export const deleteProduct = async (id: string) => {
   await dbConnect();
   const res = await ProductModel.findByIdAndDelete(id);
-  console.log("res ProductModel: deleted", res);
   return res;
 };
 
 export const fetchProductsPagination = async (page = 1, limit = 10) => {
-  console.log("fetchProductsPagination");
 
   await dbConnect();
 

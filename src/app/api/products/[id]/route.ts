@@ -9,7 +9,6 @@ export const DELETE = async (
     const { id } = params;
     const res = await deleteProduct(id);
 
-    console.log("params:_ ", params);
     return NextResponse.json({ res });
   } catch (error) {
     console.error("Error blocking product:", error);
