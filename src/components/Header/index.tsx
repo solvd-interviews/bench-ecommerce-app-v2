@@ -1,19 +1,13 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import LogOutButtonClient from "../LogOutButtonClient";
 import { useSession } from "next-auth/react";
 import { LuShield } from "react-icons/lu";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import ToggleMenu from "./client";
+import { getServerSession } from "next-auth";
 
-const Header = ({ isAdmin = false }) => {
-  const { data: session } = useSession();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+const Header = async ({ isAdmin = false }) => {
+  const session = await getServerSession();
 
   return (
     <>
@@ -34,45 +28,7 @@ const Header = ({ isAdmin = false }) => {
           )}
         </div>
 
-        <div className="sm:hidden flex items-center relative">
-          <button onClick={toggleMobileMenu} className="mr-2">
-            {isMobileMenuOpen ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
-          </button>
-          {isMobileMenuOpen && (
-            <nav className="absolute top-full right-1 mt-2 bg-gray-200 shadow-lg min-w-max rounded-lg">
-              <ul className="flex flex-col gap-2 p-2">
-                {isAdmin ? (
-                  <>
-                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                      <Link className="p-3" href={"/admin"}>Admin&apos;s Home</Link>
-                    </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                      <Link className="p-3" href={"/"}>User&apos;s Home</Link>
-                    </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                      <Link className="p-3" href={"/admin/products"}>Product</Link>
-                    </li>
-                    <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                      <Link className="p-3" href={"/admin/users"}>Users</Link>
-                    </li>
-                  </>
-                ) : (
-                  <>
-                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                        <Link className="p-3" href={"/"}>Home</Link>
-                    </li>
-                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                        <Link className="p-3" href={"/login"}>Log in</Link>
-                    </li>
-                      <li className="hover:bg-gray-600 hover:text-white p-1 rounded">
-                        <Link className="p-3" href={"/cart"}>Cart</Link>
-                    </li>
-                  </>
-                )}
-              </ul>
-            </nav>
-          )}
-        </div>
+        <ToggleMenu isAdmin={isAdmin} />
 
         <nav className="hidden sm:flex gap-3">
           <ul className="flex gap-3">
@@ -92,16 +48,16 @@ const Header = ({ isAdmin = false }) => {
                 </li>
               </>
             ) : (
-                <>
-                  <li className="hover:underline">
-                    <Link href={"/"}>Home</Link>
-                  </li>
-                  <li className="hover:underline">
-                    <Link href={"/login"}>Log in</Link>
-                  </li>
-                  <li className="hover:underline">
-                    <Link href={"/cart"}>Cart</Link>
-                  </li>
+              <>
+                <li className="hover:underline">
+                  <Link href={"/"}>Home</Link>
+                </li>
+                <li className="hover:underline">
+                  <Link href={"/login"}>Log in</Link>
+                </li>
+                <li className="hover:underline">
+                  <Link href={"/cart"}>Cart</Link>
+                </li>
               </>
             )}
           </ul>
@@ -109,13 +65,16 @@ const Header = ({ isAdmin = false }) => {
 
         {session ? (
           <div className="hidden sm:flex gap-4 items-center">
-            <h2 className="font-bold text-white" style={{ textShadow: "#000 0px 0 5px" }}>
+            <h2
+              className="font-bold text-white"
+              style={{ textShadow: "#000 0px 0 5px" }}
+            >
               {session?.user?.name}
             </h2>
             <LogOutButtonClient />
           </div>
         ) : (
-            <Link href={"/login"} className="hidden sm:block">
+          <Link href={"/login"} className="hidden sm:block">
             <button className="btn btn-primary">Login</button>
           </Link>
         )}
