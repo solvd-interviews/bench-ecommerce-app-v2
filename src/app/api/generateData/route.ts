@@ -9,26 +9,31 @@ export const GET = async (request: NextRequest) => {
   const { users, products } = sampleData;
   await dbConnect();
 
-  await Promise.all([
-    UserModel.deleteMany(),
-    ProductModel.deleteMany(),
-    CounterModel.deleteMany(),
-  ]);
+  await UserModel.deleteMany();
+  await ProductModel.deleteMany();
+  await CounterModel.deleteMany();
 
-  // Save users with incremental userNumber concurrently
-  const userPromises = users.map((user) => {
+  // Save users with incremental userNumber sequentially
+  for (const user of users) {
     const newUser = new UserModel(user);
-    return newUser.save();
-  });
+    await newUser.save();
+    await new Promise((res, rej) => {
+      setTimeout(() => {
+        res("");
+      }, 10);
+    });
+  }
 
-  // Save products with incremental productNumber concurrently
-  const productPromises = products.map((product) => {
+  // Save products with incremental productNumber sequentially
+  for (const product of products) {
     const newProduct = new ProductModel(product);
-    return newProduct.save();
-  });
-
-  // Wait for all save operations to complete
-  await Promise.all([...userPromises, ...productPromises]);
+    await newProduct.save();
+    await new Promise((res, rej) => {
+      setTimeout(() => {
+        res("");
+      }, 10);
+    });
+  }
 
   // Retrieve the saved documents
   const savedUsers = await UserModel.find();

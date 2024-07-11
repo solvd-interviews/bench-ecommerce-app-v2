@@ -6,6 +6,11 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { LuClipboardEdit } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
+import { LuArrowDownZA } from "react-icons/lu"; // z - a
+import { LuArrowDownAZ } from "react-icons/lu"; // a - z
+
+import { LuArrowDown01 } from "react-icons/lu"; // 0 - 1
+import { LuArrowDown10 } from "react-icons/lu"; // 1 - 0
 
 export interface ProductTableState {
   isLoading: boolean;
@@ -13,6 +18,11 @@ export interface ProductTableState {
   totalPages: undefined | number;
   currentProducts: Product[];
   limit: number;
+  sort: {
+    prop: string;
+    order: "asc" | "desc";
+    filter: null | string;
+  };
 }
 
 const ProductTable = () => {
@@ -22,25 +32,41 @@ const ProductTable = () => {
     totalPages: undefined,
     currentProducts: [],
     limit: 5,
+    sort: {
+      prop: "productNumber",
+      order: "desc",
+      filter: null,
+    },
   });
 
-  const { isLoading, page, totalPages, currentProducts, limit } = state;
+  const {
+    isLoading,
+    page,
+    totalPages,
+    currentProducts,
+    limit,
+    sort: { prop, order },
+  } = state;
 
-  const fetchProducts = useCallback(async (page: number, limit: number) => {
-    setState((prevState) => ({ ...prevState, isLoading: true }));
-    const res = await fetch(`/api/products?page=${page}&limit=${limit}`);
-    const { products, totalPages } = await res.json();
-    setState((prevState) => ({
-      ...prevState,
-      isLoading: false,
-      totalPages: totalPages,
-      currentProducts: products,
-    }));
-  }, []);
+  const fetchProducts = useCallback(
+    async (page: number, limit: number, prop: string, order: string) => {
+      setState((prevState) => ({ ...prevState, isLoading: true }));
+      let url = `/api/products?page=${page}&limit=${limit}&sort=${prop}&order=${order}`;
+      const res = await fetch(url);
+      const { products, totalPages } = await res.json();
+      setState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        totalPages: totalPages,
+        currentProducts: products,
+      }));
+    },
+    []
+  );
 
   useEffect(() => {
-    fetchProducts(page, limit);
-  }, [page, limit, fetchProducts]);
+    fetchProducts(page, limit, prop, order);
+  }, [page, limit, fetchProducts, prop, order]);
 
   const handleDeleteProduct = async (id: string) => {
     try {
@@ -94,16 +120,248 @@ const ProductTable = () => {
         <table className="w-full ">
           <thead>
             <tr>
-              <th className="py-2 px-4 text-left">Id</th>
-              <th className="py-2 px-4 text-left">Content</th>
-              <th className="py-2 px-4 text-left">Name</th>
-              <th className="py-2 px-4 text-left">Created at</th>
-              <th className="py-2 px-4 text-left">Updated at</th>
-              <th className="py-2 px-4 text-left">Description</th>
-              <th className="py-2 px-4 text-left">Price</th>
-              <th className="py-2 px-4 text-left">Stock</th>
-              <th className="py-2 px-4 text-left">Block</th>
-              <th className="py-2 px-4 text-left">Status</th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer max-w-32 ${
+                  prop === "productNumber" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "productNumber",
+                      order:
+                        prevState.sort.prop === "productNumber"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "desc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Id</p>
+                  {prop === "productNumber" &&
+                    (order == "asc" ? (
+                      <LuArrowDown01 size={20} />
+                    ) : (
+                      <LuArrowDown10 size={20} />
+                    ))}
+                </div>
+              </th>
+              <th className="py-2 px-4 text-left ">Content</th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "name" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "name",
+                      order:
+                        prevState.sort.prop === "name"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "asc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Name</p>
+                  {prop === "name" &&
+                    (order == "asc" ? (
+                      <LuArrowDownAZ size={20} />
+                    ) : (
+                      <LuArrowDownZA size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "createdAt" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "createdAt",
+                      order:
+                        prevState.sort.prop === "createdAt"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "desc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Created at</p>
+                  {prop === "createdAt" &&
+                    (order == "asc" ? (
+                      <LuArrowDownAZ size={20} />
+                    ) : (
+                      <LuArrowDownZA size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "updatedAt" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "updatedAt",
+                      order:
+                        prevState.sort.prop === "updatedAt"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "desc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Updated at</p>
+                  {prop === "updatedAt" &&
+                    (order == "asc" ? (
+                      <LuArrowDownAZ size={20} />
+                    ) : (
+                      <LuArrowDownZA size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "description" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "description",
+                      order:
+                        prevState.sort.prop === "description"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "asc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Description</p>
+                  {prop === "description" &&
+                    (order == "asc" ? (
+                      <LuArrowDownAZ size={20} />
+                    ) : (
+                      <LuArrowDownZA size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "price" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "price",
+                      order:
+                        prevState.sort.prop === "price"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "asc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Price</p>
+                  {prop === "price" &&
+                    (order == "asc" ? (
+                      <LuArrowDown01 size={20} />
+                    ) : (
+                      <LuArrowDown10 size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "stock" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "stock",
+                      order:
+                        prevState.sort.prop === "stock"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "asc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Stock</p>
+                  {prop === "stock" &&
+                    (order == "asc" ? (
+                      <LuArrowDown01 size={20} />
+                    ) : (
+                      <LuArrowDown10 size={20} />
+                    ))}
+                </div>
+              </th>
+              <th
+                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
+                  prop === "isBlocked" && "bg-primary text-white"
+                }`}
+                onClick={() => {
+                  setState((prevState) => ({
+                    ...prevState,
+                    sort: {
+                      filter: null,
+                      prop: "isBlocked",
+                      order:
+                        prevState.sort.prop === "isBlocked"
+                          ? prevState.sort.order === "asc"
+                            ? "desc"
+                            : "asc"
+                          : "asc",
+                    },
+                  }));
+                }}
+              >
+                <div className="flex gap-1 items-center">
+                  <p>Block</p>
+                  {prop === "isBlocked" &&
+                    (order == "asc" ? (
+                      <LuArrowDownAZ size={20} />
+                    ) : (
+                      <LuArrowDownZA size={20} />
+                    ))}
+                </div>
+              </th>
+              <th className="py-2 px-4 text-left ">Status</th>
               <th className="py-2 px-4 text-left">Actions</th>
             </tr>
           </thead>

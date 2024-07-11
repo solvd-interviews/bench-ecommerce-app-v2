@@ -6,7 +6,11 @@ export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get("limit");
   const page = searchParams.get("page");
-  if (!limit || !page) {
+  const sort = searchParams.get("sort");
+  const order = searchParams.get("order");
+  console.log("sort and order", sort, order);
+
+  if (!limit || !page || !sort || !order) {
     return NextResponse.json(
       { error: "The params are wrong" },
       { status: 400 }
@@ -15,7 +19,9 @@ export const GET = async (request: NextRequest) => {
 
   const { products, totalPages, currentPage } = await fetchProductsPagination(
     parseInt(page),
-    parseInt(limit)
+    parseInt(limit),
+    sort,
+    order
   );
 
   return NextResponse.json(
