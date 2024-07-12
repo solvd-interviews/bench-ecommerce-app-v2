@@ -25,14 +25,14 @@ export interface ProductTableState {
   };
 }
 
-const thArr: {
+const tablePropertyAndSkeletonArr: {
   label: string;
   prop: string;
   defOrder: "asc" | "desc";
   logic: boolean;
   icon?: "number" | "str";
-  loadStyle: string;
-  loadQuan: number;
+  skeletonStyle: string;
+  skeletonQuantity: number;
 }[] = [
   {
     label: "Id",
@@ -40,16 +40,16 @@ const thArr: {
     defOrder: "desc",
     logic: true,
     icon: "number",
-    loadStyle: "h-4 w-4",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-4",
+    skeletonQuantity: 1,
   },
   {
     label: "Content",
     logic: false,
     prop: "",
     defOrder: "asc",
-    loadStyle: "h-20 w-24",
-    loadQuan: 1,
+    skeletonStyle: "h-20 w-24",
+    skeletonQuantity: 1,
   },
   {
     label: "Name",
@@ -57,8 +57,8 @@ const thArr: {
     defOrder: "asc",
     logic: true,
     icon: "str",
-    loadStyle: "h-4 w-56",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-56",
+    skeletonQuantity: 1,
   },
   {
     label: "Created At",
@@ -66,8 +66,8 @@ const thArr: {
     defOrder: "desc",
     logic: true,
     icon: "str",
-    loadStyle: "h-4 w-20",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-20",
+    skeletonQuantity: 1,
   },
   {
     label: "Updated At",
@@ -75,8 +75,8 @@ const thArr: {
     defOrder: "desc",
     logic: true,
     icon: "str",
-    loadStyle: "h-4 w-20",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-20",
+    skeletonQuantity: 1,
   },
   {
     label: "Description",
@@ -84,8 +84,8 @@ const thArr: {
     defOrder: "asc",
     logic: true,
     icon: "str",
-    loadStyle: "h-4 w-56",
-    loadQuan: 3,
+    skeletonStyle: "h-4 w-56",
+    skeletonQuantity: 3,
   },
   {
     label: "Price",
@@ -93,8 +93,8 @@ const thArr: {
     defOrder: "asc",
     logic: true,
     icon: "number",
-    loadStyle: "h-4 w-10",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-10",
+    skeletonQuantity: 1,
   },
   {
     label: "Stock",
@@ -102,8 +102,8 @@ const thArr: {
     defOrder: "asc",
     logic: true,
     icon: "number",
-    loadStyle: "h-4 w-10",
-    loadQuan: 1,
+    skeletonStyle: "h-4 w-10",
+    skeletonQuantity: 1,
   },
   {
     label: "Block",
@@ -111,24 +111,24 @@ const thArr: {
     defOrder: "asc",
     logic: true,
     icon: "str",
-    loadStyle: "h-7 w-12",
-    loadQuan: 1,
+    skeletonStyle: "h-7 w-12",
+    skeletonQuantity: 1,
   },
   {
     label: "Status",
     logic: false,
     prop: "",
     defOrder: "asc",
-    loadStyle: "h-7 w-12",
-    loadQuan: 1,
+    skeletonStyle: "h-7 w-12",
+    skeletonQuantity: 1,
   },
   {
     label: "Actions",
     logic: false,
     prop: "",
     defOrder: "asc",
-    loadStyle: "h-10 w-20",
-    loadQuan: 2,
+    skeletonStyle: "h-10 w-20",
+    skeletonQuantity: 2,
   },
 ];
 
@@ -227,7 +227,7 @@ const ProductTable = () => {
         <table className="w-full ">
           <thead>
             <tr>
-              {thArr.map((e, index) => {
+              {tablePropertyAndSkeletonArr.map((e, index) => {
                 if (e.logic) {
                   return (
                     <th
@@ -284,17 +284,17 @@ const ProductTable = () => {
                 .fill(null)
                 .map((_, indexL) => (
                   <tr key={indexL} className="h-32">
-                    {thArr.map((e, indexE) => (
+                    {tablePropertyAndSkeletonArr.map((e, indexE) => (
                       <td key={indexE} className="py-2 px-4 ">
                         <div className="flex flex-col gap-1">
-                          {Array(e.loadQuan)
+                          {Array(e.skeletonQuantity)
                             .fill(null)
                             .map((_, indexZ) => (
                               <div
                                 key={indexZ}
                                 className={
                                   "skeleton animate-skeleton-fast " +
-                                  e.loadStyle
+                                  e.skeletonStyle
                                 }
                               ></div>
                             ))}
