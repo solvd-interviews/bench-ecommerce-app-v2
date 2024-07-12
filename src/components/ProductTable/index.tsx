@@ -25,6 +25,113 @@ export interface ProductTableState {
   };
 }
 
+const thArr: {
+  label: string;
+  prop: string;
+  defOrder: "asc" | "desc";
+  logic: boolean;
+  icon?: "number" | "str";
+  loadStyle: string;
+  loadQuan: number;
+}[] = [
+  {
+    label: "Id",
+    prop: "productNumber",
+    defOrder: "desc",
+    logic: true,
+    icon: "number",
+    loadStyle: "h-4 w-4",
+    loadQuan: 1,
+  },
+  {
+    label: "Content",
+    logic: false,
+    prop: "",
+    defOrder: "asc",
+    loadStyle: "h-20 w-24",
+    loadQuan: 1,
+  },
+  {
+    label: "Name",
+    prop: "name",
+    defOrder: "asc",
+    logic: true,
+    icon: "str",
+    loadStyle: "h-4 w-56",
+    loadQuan: 1,
+  },
+  {
+    label: "Created At",
+    prop: "createdAt",
+    defOrder: "desc",
+    logic: true,
+    icon: "str",
+    loadStyle: "h-4 w-20",
+    loadQuan: 1,
+  },
+  {
+    label: "Updated At",
+    prop: "updatedAt",
+    defOrder: "desc",
+    logic: true,
+    icon: "str",
+    loadStyle: "h-4 w-20",
+    loadQuan: 1,
+  },
+  {
+    label: "Description",
+    prop: "description",
+    defOrder: "asc",
+    logic: true,
+    icon: "str",
+    loadStyle: "h-4 w-56",
+    loadQuan: 3,
+  },
+  {
+    label: "Price",
+    prop: "price",
+    defOrder: "asc",
+    logic: true,
+    icon: "number",
+    loadStyle: "h-4 w-10",
+    loadQuan: 1,
+  },
+  {
+    label: "Stock",
+    prop: "stock",
+    defOrder: "asc",
+    logic: true,
+    icon: "number",
+    loadStyle: "h-4 w-10",
+    loadQuan: 1,
+  },
+  {
+    label: "Block",
+    prop: "isBlocked",
+    defOrder: "asc",
+    logic: true,
+    icon: "str",
+    loadStyle: "h-7 w-12",
+    loadQuan: 1,
+  },
+  {
+    label: "Status",
+    logic: false,
+    prop: "",
+    defOrder: "asc",
+    loadStyle: "h-7 w-12",
+    loadQuan: 1,
+  },
+  {
+    label: "Actions",
+    logic: false,
+    prop: "",
+    defOrder: "asc",
+    loadStyle: "h-10 w-20",
+    loadQuan: 2,
+  },
+];
+
 const ProductTable = () => {
   const [state, setState] = useState<ProductTableState>({
     isLoading: true,
@@ -120,290 +227,80 @@ const ProductTable = () => {
         <table className="w-full ">
           <thead>
             <tr>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer max-w-32 ${
-                  prop === "productNumber" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "productNumber",
-                      order:
-                        prevState.sort.prop === "productNumber"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "desc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Id</p>
-                  {prop === "productNumber" &&
-                    (order == "asc" ? (
-                      <LuArrowDown01 size={20} />
-                    ) : (
-                      <LuArrowDown10 size={20} />
-                    ))}
-                </div>
-              </th>
-              <th className="py-2 px-4 text-left ">Content</th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "name" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "name",
-                      order:
-                        prevState.sort.prop === "name"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "asc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Name</p>
-                  {prop === "name" &&
-                    (order == "asc" ? (
-                      <LuArrowDownAZ size={20} />
-                    ) : (
-                      <LuArrowDownZA size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "createdAt" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "createdAt",
-                      order:
-                        prevState.sort.prop === "createdAt"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "desc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Created at</p>
-                  {prop === "createdAt" &&
-                    (order == "asc" ? (
-                      <LuArrowDownAZ size={20} />
-                    ) : (
-                      <LuArrowDownZA size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "updatedAt" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "updatedAt",
-                      order:
-                        prevState.sort.prop === "updatedAt"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "desc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Updated at</p>
-                  {prop === "updatedAt" &&
-                    (order == "asc" ? (
-                      <LuArrowDownAZ size={20} />
-                    ) : (
-                      <LuArrowDownZA size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "description" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "description",
-                      order:
-                        prevState.sort.prop === "description"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "asc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Description</p>
-                  {prop === "description" &&
-                    (order == "asc" ? (
-                      <LuArrowDownAZ size={20} />
-                    ) : (
-                      <LuArrowDownZA size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "price" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "price",
-                      order:
-                        prevState.sort.prop === "price"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "asc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Price</p>
-                  {prop === "price" &&
-                    (order == "asc" ? (
-                      <LuArrowDown01 size={20} />
-                    ) : (
-                      <LuArrowDown10 size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "stock" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "stock",
-                      order:
-                        prevState.sort.prop === "stock"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "asc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Stock</p>
-                  {prop === "stock" &&
-                    (order == "asc" ? (
-                      <LuArrowDown01 size={20} />
-                    ) : (
-                      <LuArrowDown10 size={20} />
-                    ))}
-                </div>
-              </th>
-              <th
-                className={`py-2 px-4 text-left hover:underline hover:cursor-pointer ${
-                  prop === "isBlocked" && "bg-primary text-white"
-                }`}
-                onClick={() => {
-                  setState((prevState) => ({
-                    ...prevState,
-                    sort: {
-                      filter: null,
-                      prop: "isBlocked",
-                      order:
-                        prevState.sort.prop === "isBlocked"
-                          ? prevState.sort.order === "asc"
-                            ? "desc"
-                            : "asc"
-                          : "asc",
-                    },
-                  }));
-                }}
-              >
-                <div className="flex gap-1 items-center">
-                  <p>Block</p>
-                  {prop === "isBlocked" &&
-                    (order == "asc" ? (
-                      <LuArrowDownAZ size={20} />
-                    ) : (
-                      <LuArrowDownZA size={20} />
-                    ))}
-                </div>
-              </th>
-              <th className="py-2 px-4 text-left ">Status</th>
-              <th className="py-2 px-4 text-left">Actions</th>
+              {thArr.map((e, index) => {
+                if (e.logic) {
+                  return (
+                    <th
+                      key={index}
+                      className={`py-2 px-4 text-left hover:underline hover:cursor-pointer max-w-32 ${
+                        prop === e.prop && "bg-primary text-white"
+                      }`}
+                      onClick={() => {
+                        setState((prevState) => ({
+                          ...prevState,
+                          sort: {
+                            filter: null,
+                            prop: e.prop,
+                            order:
+                              prevState.sort.prop === e.prop
+                                ? prevState.sort.order === "asc"
+                                  ? "desc"
+                                  : "asc"
+                                : e.defOrder,
+                          },
+                        }));
+                      }}
+                    >
+                      <div className="flex gap-1 items-center">
+                        <p>{e.label}</p>
+                        {prop === e.prop &&
+                          (order == "asc" ? (
+                            e.icon === "number" ? (
+                              <LuArrowDown01 size={20} />
+                            ) : (
+                              <LuArrowDownAZ />
+                            )
+                          ) : e.icon === "number" ? (
+                            <LuArrowDown10 size={20} />
+                          ) : (
+                            <LuArrowDownZA />
+                          ))}
+                      </div>
+                    </th>
+                  );
+                } else {
+                  return (
+                    <th key={index} className="py-2 px-4 text-left ">
+                      {e.label}
+                    </th>
+                  );
+                }
+              })}
             </tr>
           </thead>
           <tbody>
             {isLoading ? (
               Array(limit)
                 .fill(null)
-                .map((_, index) => (
-                  <tr className="h-32" key={index}>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-4"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-20 w-24"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-20"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-20"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-20"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-40"></div>
-                    </td>
-                    <td className="py-2 m-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-10"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-4 w-10"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-7 w-12"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-7 w-12"></div>
-                    </td>
-                    <td className="py-2 px-4">
-                      <div className="skeleton animate-skeleton-fast h-10 w-20"></div>
-                    </td>
+                .map((_, indexL) => (
+                  <tr key={indexL} className="h-32">
+                    {thArr.map((e, indexE) => (
+                      <td key={indexE} className="py-2 px-4 ">
+                        <div className="flex flex-col gap-1">
+                          {Array(e.loadQuan)
+                            .fill(null)
+                            .map((_, indexZ) => (
+                              <div
+                                key={indexZ}
+                                className={
+                                  "skeleton animate-skeleton-fast " +
+                                  e.loadStyle
+                                }
+                              ></div>
+                            ))}
+                        </div>
+                      </td>
+                    ))}
                   </tr>
                 ))
             ) : currentProducts && currentProducts.length > 0 ? (
@@ -553,47 +450,19 @@ const ProductTable = () => {
         </table>
       </div>
       {totalPages ? (
-        <Pagination pages={totalPages} limit={limit} setState={setState} />
+        <Pagination
+          pages={totalPages}
+          limit={limit}
+          setState={setState}
+          loading={false}
+        />
       ) : (
-        <div className="flex justify-center items-center w-full py-1 relative">
-          <label className="flex items-center gap-2 md:absolute md:left-2">
-            <p className="text-stone-500 hidden md:flex">Rows per page</p>
-            <select className="select select-bordered w-full max-w-24">
-              <option disabled selected>
-                Pick your product limit
-              </option>
-              <option>1</option>
-              <option>3</option>
-              <option>5</option>
-              <option>10</option>
-              <option>20</option>
-              <option>50</option>
-              <option>100</option>
-            </select>
-          </label>
-
-          <button
-            className="mr-4 btn btn-primary shadow-xl btn-disabled"
-            disabled
-          >
-            Prev
-          </button>
-          <button className="w-10 flex justify-center items-center rounded-md font-bold btn btn-primary mx-1 shadow-xl text-white">
-            1
-          </button>
-          <button
-            className="w-10 flex justify-center items-center rounded-md font-bold btn btn-primary mx-1 shadow-xl btn-disabled text-white"
-            disabled
-          >
-            2
-          </button>
-          <button
-            className="ml-4 btn btn-primary shadow-xl btn-disabled"
-            disabled
-          >
-            Next
-          </button>
-        </div>
+        <Pagination
+          pages={2}
+          limit={limit}
+          setState={setState}
+          loading={true}
+        />
       )}
     </>
   );

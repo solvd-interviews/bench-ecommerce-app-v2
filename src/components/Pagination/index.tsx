@@ -5,9 +5,15 @@ interface PaginationProps {
   pages: number;
   limit: number;
   setState: Dispatch<SetStateAction<ProductTableState>>;
+  loading: boolean;
 }
 
-function Pagination({ pages, limit, setState }: PaginationProps) {
+function Pagination({
+  pages,
+  limit,
+  setState,
+  loading = true,
+}: PaginationProps) {
   //Set number of pages
   const numberOfPages = useMemo(() => {
     const pagesArray = [];
@@ -69,7 +75,41 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
     setArrOfCurrButtons(tempNumberOfPages);
     setState((prevState) => ({ ...prevState, page: currentButton }));
   }, [currentButton, arrOfCurrButtons, numberOfPages, setState]);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full py-1 relative gap-1">
+        <label className="flex items-center gap-2 md:absolute md:left-2">
+          <p className="text-stone-500 hidden md:flex">Rows per page</p>
+          <select className="select select-bordered w-full max-w-24">
+            <option disabled>Pick your product limit</option>
+            <option>1</option>
+            <option>3</option>
+            <option selected>5</option>
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+        </label>
 
+        <button className="btn btn-primary shadow-xl btn-disabled" disabled>
+          Prev
+        </button>
+        <button className=" flex justify-center items-center rounded-md font-bold btn btn-primary  shadow-xl text-white">
+          1
+        </button>
+        <button
+          className=" flex justify-center items-center rounded-md font-bold btn btn-primary  shadow-xl btn-disabled text-white"
+          disabled
+        >
+          2
+        </button>
+        <button className=" btn btn-primary shadow-xl btn-disabled" disabled>
+          Next
+        </button>
+      </div>
+    );
+  }
   return (
     <div className=" flex justify-center items-center w-full py-1 relative gap-1">
       <label className="flex items-center gap-2 md:absolute md:left-2 ">
@@ -84,9 +124,7 @@ function Pagination({ pages, limit, setState }: PaginationProps) {
             }))
           }
         >
-          <option disabled selected>
-            Pick your product limit
-          </option>
+          <option disabled>Pick your product limit</option>
           <option>1</option>
           <option>3</option>
           <option>5</option>
