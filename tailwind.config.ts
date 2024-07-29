@@ -16,6 +16,9 @@ const config: Config = {
       animation: {
         "skeleton-fast": "skeleton 1s linear infinite",
       },
+      height: {
+        '480': '480px',
+      },
     },
   },
   daisyui: {

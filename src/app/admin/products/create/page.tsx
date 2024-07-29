@@ -34,12 +34,14 @@ const Page = () => {
       setIsUploading(false);
       return toast.error("The name should be greater than 2 characters.");
     }
-    if (description.length < 3) {
+
+    if (description.length < 15 && description.length > 90) {
       setIsUploading(false);
       return toast.error(
-        "The description should be greater than 2 characters."
+        "The description should be greater than 14 characters and less than 90."
       );
     }
+
     if (!price || price < 1) {
       setIsUploading(false);
       return toast.error("The price should be greater than 0.");
@@ -49,6 +51,7 @@ const Page = () => {
       setIsUploading(false);
       return toast.error("At least 1 file is required.");
     }
+
     const formData = new FormData();
     formData.set("name", name);
     formData.set("description", description);
