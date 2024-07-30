@@ -19,7 +19,9 @@ const Card = ({ product }: { product: Product }) => {
         </figure>
       </Link>
       <div className="card-body">
+        <Link href={`/${product.id}`}>
         <h2 className="card-title truncate">{product.name}</h2>
+        </Link>
         <p className="overflow-hidden text-ellipsis h-20">{product.description}</p>
         <div className="card-actions mt-4">
           <p className="text-xl">${product.price}</p>
