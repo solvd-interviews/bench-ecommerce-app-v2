@@ -9,15 +9,14 @@ export interface ProductTableState {
   sort: {
     prop: string;
     order: "asc" | "desc";
-    filter: null | string;
   };
 }
 
 export interface Filter {
   id: number | null;
   name: string | null;
-  createDate: Date | null;
-  updatedDate: Date | null;
+  createDate: Date | string | null;
+  updatedDate: Date | string | null;
   price: number | null;
   stock: number | null;
   block: boolean | null

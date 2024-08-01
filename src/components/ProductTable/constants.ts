@@ -55,7 +55,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Description",
       prop: "description",
       defOrder: "asc",
-      logic: true,
+      logic: false,
       icon: "str",
       skeletonStyle: "h-4 w-56",
       skeletonQuantity: 3,

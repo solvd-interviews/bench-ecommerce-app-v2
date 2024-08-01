@@ -12,6 +12,7 @@ import { LuArrowDownZA } from "react-icons/lu"; // z - a
 import { LuArrowDownAZ } from "react-icons/lu"; // a - z
 import { LuArrowDown01 } from "react-icons/lu"; // 0 - 1
 import { LuArrowDown10 } from "react-icons/lu"; // 1 - 0
+import { Sorts_Mill_Goudy } from "next/font/google";
 
 const defaultValues = {
   id: null as number | null,
@@ -20,7 +21,7 @@ const defaultValues = {
   updatedDate: null as string | null,
   price: null as number | null,
   stock: null as number | null,
-  block: false
+  block: null
 };
 
 type FilterKeys = keyof typeof defaultValues;
@@ -34,8 +35,7 @@ const ProductTable = () => {
     limit: 5,
     sort: {
       prop: "productNumber",
-      order: "desc",
-      filter: null,
+      order: "asc"
     },
   });
   const [filters, setFilters] = useState(defaultValues);
@@ -58,8 +58,6 @@ const ProductTable = () => {
     } else if (type === 'checkbox') {
       newValue = checked;
     }
-
-    console.log(`Handling change for ${name}: ${newValue}`);
 
     setFilters(prev => ({
       ...prev,
@@ -93,11 +91,10 @@ const ProductTable = () => {
           case 'name':
             // Ensure the name is treated as a string and passed even if it's an empty string
             if (typeof value === 'string') {
-              acc[safeKey] = value.trim();  // Remove excess whitespace
+              acc[safeKey] = value.trim();
             }
             break;
           case 'block':
-            // Boolean values do not need trimming or conversion
             acc[safeKey] = Boolean(value);
             break;
           case 'createDate':
@@ -116,28 +113,28 @@ const ProductTable = () => {
 
 
 
-    fetchProducts(cleanFilters);
+    fetchProducts(cleanFilters, tableState.sort);
   };
 
-  const fetchProducts = useCallback(async (filters: Partial<Filter>) => {
+  const fetchProducts = useCallback(async (
+    filters: Partial<Filter>,
+    sorting: { prop: string, order: string }) => {
     setTableState((prevState) => ({ ...prevState, isLoading: true }));
 
     // Initialize URLSearchParams with mandatory parameters
     const queryParams = new URLSearchParams({
       page: String(tableState.page),
       limit: String(tableState.limit),
-      sort: tableState.sort.prop,
-      order: tableState.sort.order
+      sort: sorting.prop,
+      order: sorting.order
     });
-
-    console.log("filters before messing with them with code: ", filters);
 
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== null && value !== undefined) {
         queryParams.set(key, String(value));
       }
     });
-    console.log("queryParams: ", queryParams);
+
     const url = `/api/products?${queryParams.toString()}`;
 
     try {
@@ -154,7 +151,7 @@ const ProductTable = () => {
       toast.error("Failed to fetch products. Try again later.");
       setTableState(prevState => ({ ...prevState, isLoading: false }));
     }
-  }, [tableState.page, tableState.limit, tableState.sort]);
+  }, [tableState.page, tableState.limit]);
 
 
   const handleDeleteProduct = async (id: string) => {
@@ -204,7 +201,7 @@ const ProductTable = () => {
   };
 
   useEffect(() => {
-    fetchProducts({});
+    fetchProducts(filters, tableState.sort);
   }, []);
 
   const formMarkup = () => (
@@ -319,7 +316,7 @@ const ProductTable = () => {
           id="block"
           name="block"
           className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-          checked={filters.block}
+          checked={filters.block || false}
           onChange={handleChange}
         />
       </div>
@@ -362,19 +359,17 @@ const ProductTable = () => {
                         prop === e.prop && "bg-primary text-white"
                       }`}
                       onClick={() => {
+                        const newOrder = prop === e.prop
+                          ? (order === "asc" ? "desc" : "asc") : e.defOrder;
+
                         setTableState((prevState) => ({
                           ...prevState,
                           sort: {
-                            filter: null,
                             prop: e.prop,
-                            order:
-                              prevState.sort.prop === e.prop
-                                ? prevState.sort.order === "asc"
-                                  ? "desc"
-                                  : "asc"
-                                : e.defOrder,
+                            order: newOrder,
                           },
                         }));
+                        fetchProducts(filters, { prop: e.prop, order: newOrder })
                       }}
                     >
                       <div className="flex gap-1 items-center">
