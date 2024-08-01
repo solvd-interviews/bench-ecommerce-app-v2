@@ -8,11 +8,8 @@ import { LuClipboardEdit } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 import { ProductTableState, Filter } from "./types";
 import { tablePropertyAndSkeletonArr } from "./constants";
-import { LuArrowDownZA } from "react-icons/lu"; // z - a
-import { LuArrowDownAZ } from "react-icons/lu"; // a - z
-import { LuArrowDown01 } from "react-icons/lu"; // 0 - 1
-import { LuArrowDown10 } from "react-icons/lu"; // 1 - 0
-import { Sorts_Mill_Goudy } from "next/font/google";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 
 const defaultValues = {
   id: null as number | null,
@@ -372,19 +369,21 @@ const ProductTable = () => {
                         fetchProducts(filters, { prop: e.prop, order: newOrder })
                       }}
                     >
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-1 justify-between">
                         <p>{e.label}</p>
                         {prop === e.prop &&
                           (order == "asc" ? (
                             e.icon === "number" ? (
-                              <LuArrowDown01 size={20} />
+                            <IoIosArrowDown size={25} />
                             ) : (
-                              <LuArrowDownAZ />
+                              <IoIosArrowDown size={25} />
                             )
                           ) : e.icon === "number" ? (
-                            <LuArrowDown10 size={20} />
+                            <IoIosArrowUp size={25} />
+
                           ) : (
-                            <LuArrowDownZA />
+                              <IoIosArrowUp size={25} />
+
                           ))}
                       </div>
                     </th>
