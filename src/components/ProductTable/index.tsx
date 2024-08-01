@@ -371,20 +371,10 @@ const ProductTable = () => {
                     >
                       <div className="flex gap-1 justify-between">
                         <p>{e.label}</p>
-                        {prop === e.prop &&
-                          (order == "asc" ? (
-                            e.icon === "number" ? (
-                            <IoIosArrowDown size={25} />
-                            ) : (
-                              <IoIosArrowDown size={25} />
-                            )
-                          ) : e.icon === "number" ? (
-                            <IoIosArrowUp size={25} />
-
-                          ) : (
-                              <IoIosArrowUp size={25} />
-
-                          ))}
+                        {prop === e.prop && (
+                          order === "asc" ?
+                            <IoIosArrowDown size={25} /> :
+                            <IoIosArrowUp size={25} />)}
                       </div>
                     </th>
                   );
