@@ -2,7 +2,7 @@ export const tablePropertyAndSkeletonArr: {
   label: string;
   prop: string;
   defOrder: "asc" | "desc";
-  logic: boolean;
+  isSortable: boolean;
   icon?: "number" | "str";
   skeletonStyle: string;
   skeletonQuantity: number;
@@ -11,14 +11,14 @@ export const tablePropertyAndSkeletonArr: {
       label: "Id",
       prop: "productNumber",
       defOrder: "desc",
-      logic: true,
+    isSortable: true,
       icon: "number",
       skeletonStyle: "h-4 w-4",
       skeletonQuantity: 1,
     },
     {
-      label: "Content",
-      logic: false,
+      label: "Images",
+      isSortable: false,
       prop: "",
       defOrder: "asc",
       skeletonStyle: "h-20 w-24",
@@ -28,7 +28,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Name",
       prop: "name",
       defOrder: "asc",
-      logic: true,
+      isSortable: true,
       icon: "str",
       skeletonStyle: "h-4 w-56",
       skeletonQuantity: 1,
@@ -37,7 +37,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Created At",
       prop: "createdAt",
       defOrder: "desc",
-      logic: true,
+      isSortable: true,
       icon: "str",
       skeletonStyle: "h-4 w-20",
       skeletonQuantity: 1,
@@ -46,7 +46,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Updated At",
       prop: "updatedAt",
       defOrder: "desc",
-      logic: true,
+      isSortable: true,
       icon: "str",
       skeletonStyle: "h-4 w-20",
       skeletonQuantity: 1,
@@ -55,7 +55,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Description",
       prop: "description",
       defOrder: "asc",
-      logic: false,
+      isSortable: false,
       icon: "str",
       skeletonStyle: "h-4 w-56",
       skeletonQuantity: 3,
@@ -64,7 +64,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Price",
       prop: "price",
       defOrder: "asc",
-      logic: true,
+      isSortable: true,
       icon: "number",
       skeletonStyle: "h-4 w-10",
       skeletonQuantity: 1,
@@ -73,7 +73,7 @@ export const tablePropertyAndSkeletonArr: {
       label: "Stock",
       prop: "stock",
       defOrder: "asc",
-      logic: true,
+      isSortable: true,
       icon: "number",
       skeletonStyle: "h-4 w-10",
       skeletonQuantity: 1,
@@ -82,14 +82,14 @@ export const tablePropertyAndSkeletonArr: {
       label: "Block",
       prop: "isBlocked",
       defOrder: "asc",
-      logic: true,
+      isSortable: false,
       icon: "str",
       skeletonStyle: "h-7 w-12",
       skeletonQuantity: 1,
     },
     {
       label: "Status",
-      logic: false,
+      isSortable: false,
       prop: "",
       defOrder: "asc",
       skeletonStyle: "h-7 w-12",
@@ -97,7 +97,7 @@ export const tablePropertyAndSkeletonArr: {
     },
     {
       label: "Actions",
-      logic: false,
+      isSortable: false,
       prop: "",
       defOrder: "asc",
       skeletonStyle: "h-10 w-20",
