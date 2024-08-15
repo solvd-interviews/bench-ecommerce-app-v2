@@ -41,7 +41,7 @@ const FormInput = ({
   classStyle,
   register,
   errors,
-  trigger, // Add trigger here
+  trigger,
   minLength,
   min,
   maxLength,
@@ -56,7 +56,7 @@ const FormInput = ({
   classStyle?: string;
   register: Function;
   errors: FieldErrors<CreateProd>;
-  trigger: Function; // Add trigger here
+    trigger: Function;
   minLength?: number;
   min?: number;
   maxLength?: number;
@@ -191,9 +191,9 @@ const Page = () => {
         body: formData,
       });
       if (res.status == 201) {
-        toast.success("The product was added succesfully!");
+        toast.success("The product was added successfully!");
       } else {
-        throw new Error("Not uploaded succesfully");
+        throw new Error("Not uploaded successfully");
       }
     } catch (error) {
       toast.error("There was an unexpected error! Contact support <3.");
@@ -204,17 +204,17 @@ const Page = () => {
   };
 
   return (
-    <div className="flex p-4 overflow-y-auto w-full h-full justify-center items-center">
-      <form className="flex flex-col justify-between gap-4 max-w-xs lg:max-w-xl lg:w-full min-h-96 bg-white p-4 rounded-xl shadow-xl">
-        <div>
-          <h2 className="font-bold text-3xl">Create a Product</h2>
+    <div id="src-app-admin-products-create-page-outer-div" className="flex p-4 overflow-y-auto w-full h-full justify-center items-center">
+      <form id="src-app-admin-products-create-page-form" className="flex flex-col justify-between gap-4 max-w-xs lg:max-w-xl lg:w-full min-h-96 bg-white p-4 rounded-xl shadow-xl">
+        <div id="src-app-admin-products-create-page-header">
+          <h2 id="src-app-admin-products-create-page-h2" className="font-bold text-3xl">Create a Product</h2>
           <CheckoutSteps
             current={steps}
             list={["Information", "Images", "Status"]}
           />
         </div>
         {steps === 0 ? (
-          <div className="w-full h-full flex flex-col ">
+          <div id="src-app-admin-products-create-page-step0" className="w-full h-full flex flex-col ">
             <FormInput
               name="Name"
               id="name"
@@ -283,7 +283,7 @@ const Page = () => {
           </>
         )}
 
-        <div className="flex justify-between items-center mt-2">
+        <div id="src-app-admin-products-create-page-buttons" className="flex justify-between items-center mt-2">
           {steps === 0 ? (
             <button className="btn btn-neutral">
               <Link
