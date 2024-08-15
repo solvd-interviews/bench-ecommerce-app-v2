@@ -56,12 +56,8 @@ export const getPublicIdFromUrl = (url: string) => {
     .replace(/\.[^/.]+$/, ""); // Remove file extension
 };
 
-export async function uploadFileLocally(image: File) {
-  if (image && image instanceof File) {
-    const arrayBuffer = await image.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64String = buffer.toString("base64");
-    const url = await uploadImage("data:image/jpeg;base64," + base64String);
-    return url;
-  }
+export async function uploadFileLocally(buffer: Buffer) {
+  const base64String = buffer.toString("base64");
+  const url = await uploadImage("data:image/jpeg;base64," + base64String);
+  return url;
 }

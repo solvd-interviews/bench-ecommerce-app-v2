@@ -88,7 +88,7 @@ const FormInput = ({
       })}
       className={`input input-bordered max-w-sm ${classStyle}`}
       placeholder={placeholder}
-      onBlur={() => trigger(id)} // Validate onBlur
+      onBlur={() => trigger(id)}
       onClick={(e) => {
         if (type === "checkbox") {
           (e.target as HTMLInputElement).blur();
@@ -106,7 +106,7 @@ const Page = () => {
     register,
     handleSubmit,
     setValue,
-    trigger, // Get the trigger function
+    trigger,
     watch,
     reset,
     formState: { errors, isSubmitting },

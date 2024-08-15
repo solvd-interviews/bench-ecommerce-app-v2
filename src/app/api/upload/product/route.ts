@@ -37,10 +37,12 @@ export const POST = async (request: NextRequest) => {
     }
 
     let promises: Promise<string | undefined>[] = [];
-    for (let index = 0; index < parseInt(length); index++) {
-      let file = formData.get("image-" + index);
-      if (file instanceof File) {
-        promises.push(uploadFileLocally(file));
+
+    for (let i = 0; i < parseInt(length); i++) {
+      let file = formData.get("image-" + i);
+      if (file instanceof Blob && typeof file.arrayBuffer === 'function') {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        promises.push(uploadFileLocally(buffer));
       } else {
         return NextResponse.json(
           { message: "Not correct data type in image attribute." },
@@ -65,7 +67,7 @@ export const POST = async (request: NextRequest) => {
 
     return NextResponse.json({ res: resMongo }, { status: 201 });
   } catch (error) {
-    console.error("Error handling upload:", error); // Log detailed error message
+    console.error("Error handling upload:", error);
     return NextResponse.json(
       { message: "Internal server error", error: JSON.stringify(error) },
       { status: 500 }
