@@ -2,6 +2,7 @@ import { uploadFileLocally } from "@/lib/utils/cloudinary";
 import ProductModel from "@/lib/models/ProductModel";
 import { deleteImage, getPublicIdFromUrl } from "@/lib/utils/cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import { Buffer } from "buffer";
 
 export const PUT = async (
   request: NextRequest,
@@ -93,10 +94,13 @@ export const PUT = async (
     }
 
     let promises: (Promise<string | undefined> | string)[] = [];
-    for (let index = 0; index < parseInt(length); index++) {
-      let file = formData.get("image-" + index);
+
+    for (let i = 0; i < parseInt(length); i++) {
+      let file = formData.get("image-" + i);
       if (file instanceof File) {
-        promises.push(uploadFileLocally(file));
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        promises.push(uploadFileLocally(buffer));
       } else if (typeof file === "string") {
         promises.push(file);
       } else {
@@ -106,7 +110,6 @@ export const PUT = async (
         );
       }
     }
-
 
     const urls = await Promise.all(promises);
 
